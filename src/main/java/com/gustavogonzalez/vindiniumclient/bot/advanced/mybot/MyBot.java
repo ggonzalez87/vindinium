@@ -92,7 +92,8 @@ public class MyBot implements AdvancedBot {
     
     //Implemented own methods to search in game
     public MyBot(){
-    	this.decisioner = null;
+    	SquatDecisioner sd = new SquatDecisioner();
+    	this.decisioner = sd;
     }
     
     @Override
