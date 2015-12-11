@@ -1,4 +1,4 @@
-package com.brianstempin.vindiniumclient.bot.advanced.murderbot;
+package com.gustavogonzalez.vindiniumclient.bot.advanced.mybot;
 
 import com.brianstempin.vindiniumclient.bot.BotMove;
 import com.brianstempin.vindiniumclient.bot.advanced.AdvancedBot;
@@ -11,14 +11,8 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 
-/**
- * An improvement upon com.brianstempin.vindiniumClient.bot.simple.MurderBot
- *
- * This class uses a built-in static method to perform the path search via Dijkstra and uses a simple version of
- * behavior trees to determine its next action.
- */
-public class AdvancedMurderBot implements AdvancedBot {
-
+public class MyBot implements AdvancedBot {
+	
     public static class GameContext {
         private final AdvancedGameState gameState;
         private final Map<GameState.Position, DijkstraResult> dijkstraResultMap;
@@ -36,10 +30,7 @@ public class AdvancedMurderBot implements AdvancedBot {
             return dijkstraResultMap;
         }
     }
-
-    /**
-     * Represents the result of a Dijkstra search for a given position
-     */
+    
     public static class DijkstraResult {
         private int distance;
         private GameState.Position previous;
@@ -57,7 +48,7 @@ public class AdvancedMurderBot implements AdvancedBot {
             return previous;
         }
     }
-
+    
     public static synchronized Map<GameState.Position, DijkstraResult> dijkstraSearch(AdvancedGameState gameState) {
         Map<GameState.Position, DijkstraResult> result = new HashMap<>();
 
@@ -96,30 +87,14 @@ public class AdvancedMurderBot implements AdvancedBot {
 
         return result;
     }
-
+    
     private final Decision<GameContext, BotMove> decisioner;
-
-    public AdvancedMurderBot() {
-
-        // Chain decisioners together
-    	
-        SquatDecisioner squatDecisioner = new SquatDecisioner();
-        UnattendedMineDecisioner unattendedMineDecisioner = new UnattendedMineDecisioner(squatDecisioner);
-        BotTargetingDecisioner botTargetingDecisioner = new BotTargetingDecisioner(unattendedMineDecisioner);
-        EnRouteLootingDecisioner enRouteLootingDecisioner = new EnRouteLootingDecisioner(botTargetingDecisioner);
-        
-
-        HealDecisioner healDecisioner = new HealDecisioner();
-        CombatOutcomeDecisioner combatOutcomeDecisioner = new CombatOutcomeDecisioner(botTargetingDecisioner,
-                botTargetingDecisioner);
-        CombatEngagementDecisioner combatEngagementDecisioner = new CombatEngagementDecisioner(combatOutcomeDecisioner,
-                healDecisioner);
-        BotWellnessDecisioner botWellnessDecisioner = new BotWellnessDecisioner(enRouteLootingDecisioner, combatEngagementDecisioner);
-
-        this.decisioner = botWellnessDecisioner;
-
+    
+    //Implemented own methods to search in game
+    public MyBot(){
+    	this.decisioner = null;
     }
-
+    
     @Override
     public BotMove move(AdvancedGameState gameState) {
 
@@ -139,4 +114,5 @@ public class AdvancedMurderBot implements AdvancedBot {
     public void shutdown() {
         // No-op
     }
+
 }
