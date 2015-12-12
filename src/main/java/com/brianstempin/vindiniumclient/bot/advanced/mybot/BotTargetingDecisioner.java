@@ -90,7 +90,7 @@ public class BotTargetingDecisioner implements Decision<MyBot.GameContext, BotMo
 
             // We don't want to target other bots of our type
             // TODO We probably shouldn't hardcode this name
-            if(currentHero.getName().equals("Assassin Bot"))
+            if(currentHero.getName().equals("G0nzoFTW"))
                 continue;
 
             // Are they on their spawn?
