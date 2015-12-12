@@ -23,7 +23,7 @@ public class EnemyMineTargetingDecisioner implements Decision<MyBot.GameContext,
 
 	@Override
 	public BotMove makeDecision(MyBot.GameContext context) {
-		logger.info("Deciding which bot to target");
+		logger.info("Deciding which mine to target");
 		GameState.Hero me = context.getGameState().getMe();
 
 		// Checks to see if they are any untaken mines first
