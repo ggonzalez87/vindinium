@@ -1,7 +1,7 @@
 package com.brianstempin.vindiniumclient.bot;
 
 import com.brianstempin.vindiniumclient.bot.advanced.AdvancedGameState;
-import com.brianstempin.vindiniumclient.bot.advanced.murderbot.AdvancedMurderBot;
+import com.gustavogonzalez.vindiniumclient.bot.advanced.mybot.MyBot;
 import com.brianstempin.vindiniumclient.dto.GameState;
 
 import java.util.LinkedList;
@@ -41,7 +41,7 @@ public class BotUtils {
      * @return
      */
     public static List<GameState.Hero> getHeroesAround(AdvancedGameState gameState,
-                                                           Map<GameState.Position, AdvancedMurderBot.DijkstraResult> searchResults,
+                                                           Map<GameState.Position, MyBot.DijkstraResult> searchResults,
                                                        int radius) {
         List<GameState.Hero> heroes = new LinkedList<>();
 
