@@ -1,6 +1,7 @@
 package com.gustavogonzalez.vindiniumclient.bot.advanced.mybot;
 
-import com.brianstempin.vindiniumclient.bot.BotMove;
+import com.gustavogonzalez.vindiniumclient.bot.BotMove;
+import com.gustavogonzalez.vindiniumclient.bot.BotUtils;
 import com.brianstempin.vindiniumclient.bot.advanced.AdvancedBot;
 import com.brianstempin.vindiniumclient.bot.advanced.AdvancedGameState;
 import com.brianstempin.vindiniumclient.bot.advanced.Vertex;
@@ -93,7 +94,10 @@ public class MyBot implements AdvancedBot {
     //Implemented own methods to search in game
     public MyBot(){
     	SquatDecisioner sd = new SquatDecisioner();
-    	this.decisioner = sd;
+    	MineTargetingDecisioner mtd = new MineTargetingDecisioner(sd);
+    	HealDecisioner hd = new HealDecisioner();
+    	BotWellnessDecisioner bwd = new BotWellnessDecisioner(mtd, hd);
+    	this.decisioner = bwd;
     }
     
     @Override

@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import com.brianstempin.vindiniumclient.bot.BotMove;
+import com.gustavogonzalez.vindiniumclient.bot.BotMove;
 import com.brianstempin.vindiniumclient.bot.advanced.AdvancedGameState;
 import com.gustavogonzalez.vindiniumclient.bot.advanced.mybot.MyBot;
 import com.brianstempin.vindiniumclient.dto.GameState;
