@@ -95,8 +95,9 @@ public class MyBot implements AdvancedBot {
     public MyBot(){
     	SquatDecisioner sd = new SquatDecisioner();
     	MineTargetingDecisioner mtd = new MineTargetingDecisioner(sd);
+    	EnemyMineTargetingDecisioner emtd = new EnemyMineTargetingDecisioner(mtd);
     	HealDecisioner hd = new HealDecisioner();
-    	BotWellnessDecisioner bwd = new BotWellnessDecisioner(mtd, hd);
+    	BotWellnessDecisioner bwd = new BotWellnessDecisioner(emtd, hd);
     	this.decisioner = bwd;
     }
     
