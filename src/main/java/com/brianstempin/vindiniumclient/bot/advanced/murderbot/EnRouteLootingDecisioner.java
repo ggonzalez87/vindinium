@@ -12,7 +12,8 @@ import org.apache.logging.log4j.Logger;
 import java.util.Map;
 
 /**
- * Decides if we should take some mines on the way to whatever it was we were doing.
+ * Decides if we should take some mines on the way to whatever it was we were
+ * doing.
  *
  * This decisioner will decide if its worth going after a near-by mine.
  *
@@ -20,37 +21,37 @@ import java.util.Map;
  */
 public class EnRouteLootingDecisioner implements Decision<AdvancedMurderBot.GameContext, BotMove> {
 
-    private final static Logger logger = LogManager.getLogger(EnRouteLootingDecisioner.class);
+	private final static Logger logger = LogManager.getLogger(EnRouteLootingDecisioner.class);
 
-    private final Decision<AdvancedMurderBot.GameContext, BotMove> noGoodMineDecisioner;
+	private final Decision<AdvancedMurderBot.GameContext, BotMove> noGoodMineDecisioner;
 
-    public EnRouteLootingDecisioner(Decision<AdvancedMurderBot.GameContext, BotMove> noGoodMineDecisioner) {
-        this.noGoodMineDecisioner = noGoodMineDecisioner;
-    }
+	public EnRouteLootingDecisioner(Decision<AdvancedMurderBot.GameContext, BotMove> noGoodMineDecisioner) {
+		this.noGoodMineDecisioner = noGoodMineDecisioner;
+	}
 
-    @Override
-    public BotMove makeDecision(AdvancedMurderBot.GameContext context) {
-        GameState.Position myPosition = context.getGameState().getMe().getPos();
-        Map<GameState.Position, Vertex> boardGraph = context.getGameState().getBoardGraph();
+	@Override
+	public BotMove makeDecision(AdvancedMurderBot.GameContext context) {
+		GameState.Position myPosition = context.getGameState().getMe().getPos();
+		Map<GameState.Position, Vertex> boardGraph = context.getGameState().getBoardGraph();
 
-        // Are we next to a mine that isn't ours?
-        for(Vertex currentVertex : boardGraph.get(myPosition).getAdjacentVertices()) {
-            Mine mine = context.getGameState().getMines().get(currentVertex.getPosition());
-            if(mine != null && (mine.getOwner() == null
-                    || mine.getOwner().getId() != context.getGameState().getMe().getId())) {
+		// Are we next to a mine that isn't ours?
+		for (Vertex currentVertex : boardGraph.get(myPosition).getAdjacentVertices()) {
+			Mine mine = context.getGameState().getMines().get(currentVertex.getPosition());
+			if (mine != null
+					&& (mine.getOwner() == null || mine.getOwner().getId() != context.getGameState().getMe().getId())) {
 
-                // Is it safe to take?
-                if(BotUtils.getHeroesAround(context.getGameState(), context.getDijkstraResultMap(), 1).size() > 0) {
-                    logger.info("Mine found, but another hero is too close.");
-                    return noGoodMineDecisioner.makeDecision(context);
-                }
-                logger.info("Taking a mine that we happen to already be walking by.");
-                return BotUtils.directionTowards(myPosition, mine.getPosition());
-            }
-        }
+				// Is it safe to take?
+				if (BotUtils.getHeroesAround(context.getGameState(), context.getDijkstraResultMap(), 1).size() > 0) {
+					logger.info("Mine found, but another hero is too close.");
+					return noGoodMineDecisioner.makeDecision(context);
+				}
+				logger.info("Taking a mine that we happen to already be walking by.");
+				return BotUtils.directionTowards(myPosition, mine.getPosition());
+			}
+		}
 
-        // Nope.
-        logger.info("No opportunistic mines exist.");
-        return noGoodMineDecisioner.makeDecision(context);
-    }
+		// Nope.
+		logger.info("No opportunistic mines exist.");
+		return noGoodMineDecisioner.makeDecision(context);
+	}
 }
