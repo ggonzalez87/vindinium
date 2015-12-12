@@ -1,8 +1,8 @@
-package com.gustavogonzalez.vindiniumclient.bot.advanced.mybot;
+package com.brianstempin.vindiniumclient.bot.advanced.mybot;
 
-import com.gustavogonzalez.vindiniumclient.bot.advanced.mybot.MyBot.GameContext;
-import com.gustavogonzalez.vindiniumclient.bot.BotMove;
-import com.gustavogonzalez.vindiniumclient.bot.BotUtils;
+import com.brianstempin.vindiniumclient.bot.advanced.mybot.MyBot.GameContext;
+import com.brianstempin.vindiniumclient.bot.BotMove;
+import com.brianstempin.vindiniumclient.bot.BotUtils;
 import com.brianstempin.vindiniumclient.bot.advanced.Mine;
 import com.brianstempin.vindiniumclient.bot.advanced.Vertex;
 import com.brianstempin.vindiniumclient.dto.GameState;

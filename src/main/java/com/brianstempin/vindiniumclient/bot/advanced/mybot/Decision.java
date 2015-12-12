@@ -1,4 +1,4 @@
-package com.gustavogonzalez.vindiniumclient.bot.advanced.mybot;
+package com.brianstempin.vindiniumclient.bot.advanced.mybot;
 
 public interface Decision<S, R> {
 

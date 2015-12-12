@@ -1,6 +1,7 @@
-package com.gustavogonzalez.vindiniumclient.bot.advanced.mybot;
-import com.gustavogonzalez.vindiniumclient.bot.BotMove;
-import com.gustavogonzalez.vindiniumclient.bot.BotUtils;
+package com.brianstempin.vindiniumclient.bot.advanced.murderbot;
+
+import com.brianstempin.vindiniumclient.bot.BotMove;
+import com.brianstempin.vindiniumclient.bot.BotUtils;
 import com.brianstempin.vindiniumclient.bot.advanced.Mine;
 import com.brianstempin.vindiniumclient.bot.advanced.Vertex;
 import com.brianstempin.vindiniumclient.dto.GameState;
@@ -10,38 +11,25 @@ import org.apache.logging.log4j.Logger;
 import java.util.HashSet;
 import java.util.Set;
 
-public class BotTargetingDecisioner implements Decision<MyBot.GameContext, BotMove> {
+/**
+ * Figures out who to shank
+ *
+ * This decisioner figures out which bot deserves it most (or is most vulnerable) and goes after them.
+ *
+ * On
+ */
+public class BotTargetingDecisioner implements Decision<AdvancedMurderBot.GameContext, BotMove> {
 
     private static final Logger logger = LogManager.getLogger(BotTargetingDecisioner.class);
 
-    private final Decision<MyBot.GameContext, BotMove> noTargetFoundDecisioner;
+    private final Decision<AdvancedMurderBot.GameContext, BotMove> noTargetFoundDecisioner;
 
-    public BotTargetingDecisioner(Decision<MyBot.GameContext, BotMove> noTargetFoundDecisioner) {
+    public BotTargetingDecisioner(Decision<AdvancedMurderBot.GameContext, BotMove> noTargetFoundDecisioner) {
         this.noTargetFoundDecisioner = noTargetFoundDecisioner;
     }
 
     @Override
-    public BotMove makeDecision(MyBot.GameContext context) { 
-    	MyBot.DijkstraResult closestHeroDijkstraResult = null;
-    	boolean botClose = false;
-    	for(GameState.Hero hero: context.getGameState().getHeroesById().values()){
-    		if(hero.getId()!= context.getGameState().getMe().getId()){
-    			closestHeroDijkstraResult = context.getDijkstraResultMap().get(hero.getPos());
-                if(closestHeroDijkstraResult == null)
-                    continue;
-    			if(closestHeroDijkstraResult.getDistance() < 4){
-    				botClose = true;
-    				break;
-    			}
-    		}
-    		
-    	}
-    	if(!botClose){
-    		logger.info("No bots near me to attack");
-    		return noTargetFoundDecisioner.makeDecision(context);
-    	}
-    	
-    	
+    public BotMove makeDecision(AdvancedMurderBot.GameContext context) {
         logger.info("Deciding which bot to target");
         GameState.Hero me = context.getGameState().getMe();
 
@@ -50,7 +38,7 @@ public class BotTargetingDecisioner implements Decision<MyBot.GameContext, BotMo
             if(currentMine.getOwner() != null && currentMine.getOwner().isCrashed()) {
 
                 GameState.Hero target = currentMine.getOwner();
-                MyBot.DijkstraResult currentDijkstraResult =
+                AdvancedMurderBot.DijkstraResult currentDijkstraResult =
                         context.getDijkstraResultMap().get(target.getPos());
                 GameState.Position nextPosition = target.getPos();
 
@@ -74,9 +62,9 @@ public class BotTargetingDecisioner implements Decision<MyBot.GameContext, BotMo
 
         // Ok, crashed bots.  How about bots that aren't squatting?
         GameState.Hero closestTarget = null;
-        MyBot.DijkstraResult closestTargetDijkstraResult = null;
+        AdvancedMurderBot.DijkstraResult closestTargetDijkstraResult = null;
         for(GameState.Hero currentHero : heroesWithMines) {
-        	MyBot.DijkstraResult currentDijkstraResult = context
+            AdvancedMurderBot.DijkstraResult currentDijkstraResult = context
                     .getDijkstraResultMap()
                     .get(currentHero.getPos());
 

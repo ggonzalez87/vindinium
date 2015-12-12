@@ -1,6 +1,6 @@
 package com.brianstempin.vindiniumclient.bot.advanced;
 
-import com.gustavogonzalez.vindiniumclient.bot.BotMove;
+import com.brianstempin.vindiniumclient.bot.BotMove;
 import com.brianstempin.vindiniumclient.dto.GameState;
 
 import java.util.List;
