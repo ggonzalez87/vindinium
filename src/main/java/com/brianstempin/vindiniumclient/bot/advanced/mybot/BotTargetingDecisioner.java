@@ -29,7 +29,7 @@ public class BotTargetingDecisioner implements Decision<MyBot.GameContext, BotMo
     			closestHeroDijkstraResult = context.getDijkstraResultMap().get(hero.getPos());
                 if(closestHeroDijkstraResult == null)
                     continue;
-    			if(closestHeroDijkstraResult.getDistance() < 4){
+    			if(closestHeroDijkstraResult.getDistance() < 6){
     				botClose = true;
     				break;
     			}
