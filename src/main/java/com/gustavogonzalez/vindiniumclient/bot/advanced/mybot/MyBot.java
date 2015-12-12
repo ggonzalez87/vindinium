@@ -93,12 +93,15 @@ public class MyBot implements AdvancedBot {
     
     //Implemented own methods to search in game
     public MyBot(){
+    	
     	SquatDecisioner sd = new SquatDecisioner();
     	MineTargetingDecisioner mtd = new MineTargetingDecisioner(sd);
     	EnemyMineTargetingDecisioner emtd = new EnemyMineTargetingDecisioner(mtd);
     	HealDecisioner hd = new HealDecisioner();
-    	BotWellnessDecisioner bwd = new BotWellnessDecisioner(emtd, hd);
+    	BotTargetingDecisioner btd = new BotTargetingDecisioner(emtd);
+    	BotWellnessDecisioner bwd = new BotWellnessDecisioner(btd, hd);
     	this.decisioner = bwd;
+    	
     }
     
     @Override
